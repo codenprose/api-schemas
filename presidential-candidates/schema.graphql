@@ -1,0 +1,219 @@
+"""
+The main type that is returned when querying for a Candidate
+"""
+type Candidate {
+  name: String!
+  gender: GenderOption!
+  race: String!
+  """
+  Date of Birth
+  """
+  dob: String!
+  image: String!
+  headshot: String!
+  quote: String!
+  divorced: Boolean!
+  electionYear: Int!
+  politicalParty: PoliticalPartyOption
+  """
+  Whether or not the candidate is an Independent
+  """
+  independent: Boolean!
+  website: String!
+  wikipedia: String!
+  contributionStatement(
+    """
+    Year that contributions were made (only 2019 is available now)
+    """
+    year: Int!
+    """
+    Calendar quarter that contributions were made
+    """
+    quarter: QuarterOption!
+  ): ContributionStatement!
+  """
+  Social media accounts
+  """
+  social: [SocialMediaAccount!]!
+  education: Education!
+  spouse: Spouse
+  parents: [Parent]
+  agenda: [Agenda!]!
+}
+
+"""
+Candidate query input data
+"""
+input CandidateInput {
+  id: ID!
+  electionYear: Int!
+}
+
+"""
+Political agenda, what the candidate would focus on
+if they were elected to office
+"""
+type Agenda {
+  name: String!
+  source: String!
+  preview: String!
+}
+
+"""
+Candidate contributions in a given year and quarter
+"""
+type ContributionStatement {
+  year: String!
+  quarter: String!
+  summary: ContributionSummary!
+  states: [StateContribution!]!
+}
+
+"""
+Summary of total money raised in a given year and quarter
+"""
+type ContributionSummary {
+  raised: Float!
+  spent: Float!
+  cashAvailable: Float!
+}
+
+"""
+State contribution info in a given year and quarter
+"""
+type StateContribution {
+  name: String!
+  value: Float!
+  """
+  Total number of individual contributions
+  """
+  contributions: Int!
+}
+
+"""
+Social media account name and url
+"""
+type SocialMediaAccount {
+  name: String!
+  url: String!
+}
+
+"""
+Highschool and college education
+"""
+type Education {
+  highSchool: HighSchoolEducation!
+  college: [CollegeEducation]
+}
+
+"""
+Highschool education info
+"""
+type HighSchoolEducation {
+  name: String!
+  year: Int!
+  location: String!
+  website: String!
+}
+
+"""
+College education info
+"""
+type CollegeEducation {
+  name: String!
+  location: String!
+  year: Int!
+  website: String!
+  degree: String
+  major: String!
+}
+
+"""
+Spouse of a candidate
+"""
+type Spouse {
+  name: String!
+  twitter: String
+  wikipedia: String
+  image: String
+  occupation: String
+  marriageYear: Int
+}
+
+"""
+Parent of a candidate
+"""
+type Parent {
+  relationship: ParentOption!
+  name: String!
+}
+
+"""
+Gender options
+"""
+enum GenderOption {
+  MALE
+  FEMALE
+}
+
+"""
+Political party options
+"""
+enum PoliticalPartyOption {
+  DEMOCRATIC
+  REPUBLICAN
+}
+
+"""
+Calendar quarter options
+"""
+enum QuarterOption {
+  Q1
+  Q2
+  Q3
+  Q4
+}
+
+"""
+Parent options
+"""
+enum ParentOption {
+  MOTHER
+  FATHER
+}
+
+"""
+List of Candidate options used when querying for a candidate
+"""
+enum CandidateOption {
+  MICHAEL_BENNET
+  JOE_BIDEN
+  CORY_BOOKER
+  STEVE_BULLOCK
+  PETE_BUTTIGIEG
+  JULIAN_CASTRO
+  BILL_DEBLASIO
+  JOHN_DELANEY
+  TULSI_GABBARD
+  KIRSTEN_GILLIBRAND
+  KAMALA_HARRIS
+  JOHN_HICKENLOOPER
+  JAY_INSLEE
+  AMY_KLOBUCHAR
+  WAYNE_MESSAM
+  SETH_MOULTON
+  BETO_OROURKE
+  TIM_RYAN
+  BERNIE_SANDERS
+  JOE_SESTAK
+  ERIC SWALWELL
+  ELIZABETH_WARREN
+  MARIANNE_WILLIAMSON
+  ANDREW_YANG
+  DONALD_J_TRUMP
+  WILLIAM_F_WELD
+}
+
+type Query {
+  candidate(name: CandidateOption!): Candidate!
+}
