@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/ContributionSummary",
+  "definitions": {
+    "ContributionSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "year": {
+          "type": "integer"
+        },
+        "quarter": {
+          "type": "string"
+        },
+        "summary": {
+          "$ref": "#/definitions/Summary"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/State"
+          }
+        }
+      },
+      "required": [
+        "quarter",
+        "states",
+        "summary",
+        "year"
+      ],
+      "title": "ContributionSummary"
+    },
+    "State": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "contributionsCount": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "contributionsCount",
+        "name",
+        "value"
+      ],
+      "title": "State"
+    },
+    "Summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "raised": {
+          "type": "number"
+        },
+        "spent": {
+          "type": "integer"
+        },
+        "cashAvailable": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "cashAvailable",
+        "raised",
+        "spent"
+      ],
+      "title": "Summary"
+    }
+  }
+}
